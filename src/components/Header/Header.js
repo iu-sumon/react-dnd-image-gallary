@@ -9,7 +9,9 @@ const Header = () => {
             <span>Gallary</span>
         </div>
         <div>
-            <span><input type="checkbox" /></span>
+            <span>
+               <input type="checkbox" />
+            </span>
             <span>3 Files Selected</span>
         </div>
       </div>

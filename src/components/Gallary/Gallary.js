@@ -31,7 +31,11 @@ const imagePaths = [
 
 const Gallary = () => {
     const [imageOrder, setImageOrder] = useState(imagePaths);
+    const [selectedCount, setSelectedCount] = useState(0);
 
+    const handleCheckboxClick = (index, isSelected) => {
+      setSelectedCount(selectedCount + (isSelected ? 1 : -1));
+    };
     const handleDrop = (fromIndex, toIndex) => {
       const updatedOrder = [...imageOrder];
       const [movedImage] = updatedOrder.splice(fromIndex, 1);
@@ -39,11 +43,18 @@ const Gallary = () => {
       setImageOrder(updatedOrder);
     };
   
+    console.log(selectedCount)
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="image-grid">
         {imageOrder.map((imgPath, index) => (
-          <DraggableImage key={index} imgPath={imgPath} index={index} onDrop={handleDrop} ></DraggableImage>
+          <DraggableImage 
+          key={index} 
+          imgPath={imgPath} 
+          index={index} 
+          onDrop={handleDrop}
+          onCheckboxClick={handleCheckboxClick}
+           ></DraggableImage>
         ))}
       </div>
     </DndProvider>
