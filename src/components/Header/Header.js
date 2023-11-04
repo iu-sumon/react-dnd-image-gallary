@@ -1,23 +1,45 @@
-import React from 'react';
-import './Header.css'; // Create a new CSS file for styling
+import React, { } from "react";
+import "./Header.css";
 
-const Header = () => {
+const Header = ({ value , checked}) => {
+   
+   const handleDeleteClick = () => {
+     if(checked)
+     {
+      const elements = document.getElementsByClassName('checked-true');
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'none';
+      }
+     }
+  };
+
   return (
     <header className="app-header">
       <div className="header-left">
+        <div></div>
         <div>
-            <span>Gallary</span>
-        </div>
-        <div>
-            <span>
-               <input type="checkbox" />
-            </span>
-            <span>3 Files Selected</span>
+          {value > 0 ? (
+            <React.Fragment>
+              <input
+                type="checkbox"
+                checked
+              />
+              <span>{`${value} Files Selected`}</span>
+            </React.Fragment>
+          ) : (
+            <span>Gallery</span>
+          )}
         </div>
       </div>
-      
       <div className="header-right">
-        <span>Delete Files</span>
+      {value > 0 ? (
+            <React.Fragment>
+               <span onClick={handleDeleteClick}>Delete Files</span>
+            </React.Fragment>
+          ) : (
+            <span></span>
+          )}
+      
       </div>
     </header>
   );

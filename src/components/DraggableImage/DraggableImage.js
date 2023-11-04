@@ -1,22 +1,18 @@
-// DraggableImage.js
-
-import React, { useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import React, { useState } from 'react';
 import './DraggableImage.css'
 
-
-const ItemType = 'IMAGE';
 const DraggableImage = ({ imgPath, index ,onDrop, onCheckboxClick}) => {
-
   const [isHovered, setIsHovered] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
+  const ItemType = 'IMAGE';
 
-
-  const [{ isDragging }, ref] = useDrag({
+  const [{isDragging }, ref] = useDrag({
     type: ItemType,
     item: { index },
   });
   
+
   const handleHover = (hovered) => {
     setIsHovered(hovered);
   };
@@ -26,9 +22,9 @@ const DraggableImage = ({ imgPath, index ,onDrop, onCheckboxClick}) => {
     drop: (draggedItem) => onDrop(draggedItem.index, index),
   });
 
-  const handleCheckboxClick = () => {
-    setIsSelected(!isSelected); // Toggle the selected state
-    onCheckboxClick(index, !isSelected); // Pass the index and new selected state to the parent
+  const handleCheckboxClicked = () => {
+    setIsSelected(!isSelected);
+    onCheckboxClick(!isSelected);
   };
 
   return (
@@ -36,22 +32,17 @@ const DraggableImage = ({ imgPath, index ,onDrop, onCheckboxClick}) => {
       onMouseEnter={() => handleHover(true)}
       onMouseLeave={() => handleHover(false)}
       ref={(node) => ref(drop(node))}
-      className={`grid-item${index === 0 ? ' wide' : ''}`}
+      className={`grid-item${index === 0 ? ' wide' : ''} ${isSelected ? 'checked-true': ''}`}
     >
       <img src={imgPath} alt={`pic ${index + 1} ${isDragging ? 'dragging' : ''}`} />
 
       {(isHovered || isSelected) &&(
         <div className="checkbox-container">
-          <input 
-          type="checkbox" 
-          checked={isSelected} // Set the checked state based on the isSelected state
-          onChange={handleCheckboxClick} // Handle checkbox click event
-          />
+          <input type="checkbox"  checked={isSelected} onChange={handleCheckboxClicked}/>
         </div>
       )}
     </div>
-          
-          );
+    );
 };
 
 export default DraggableImage;
